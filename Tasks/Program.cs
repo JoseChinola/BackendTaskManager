@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Permitir conections CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
