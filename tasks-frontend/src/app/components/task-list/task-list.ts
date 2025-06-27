@@ -3,10 +3,12 @@ import { Task, TaskService } from '../../services/task';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
@@ -15,7 +17,7 @@ export class TaskList implements OnInit {
   filteredTasks: Task[] = [];
   searchId: number | null = null;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.taskService.getTasks().subscribe(data => {
@@ -54,13 +56,26 @@ export class TaskList implements OnInit {
   }
 
   deleteTask(task: Task) {
-    this.taskService.deleteTask(task.id).subscribe({
-      next: () => {
-        this.tasks = this.tasks.filter(t => t.id !== task.id);
-      },
-      error: (err) => {
-        console.error('Error eliminando la tarea', err);
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      data: {
+        title: 'Confirmar eliminación',
+        message: `¿Estás seguro de que deseas eliminar la tarea "${task.titulo}"?`
       }
-    });
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.deleteTask(task.id).subscribe({
+          next: () => {
+            this.tasks = this.tasks.filter(t => t.id !== task.id);
+            this.filteredTasks = this.filteredTasks.filter(t => t.id !== task.id);
+          },
+          error: (err) => {
+            console.error('Error eliminando la tarea', err);
+          }
+        });
+      }
+    })
+
   }
 }
