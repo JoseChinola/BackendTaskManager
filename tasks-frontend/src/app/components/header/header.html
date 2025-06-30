@@ -1,9 +1,29 @@
-<nav class="navbar">
-  <div class="navbar-brand">
-    <a routerLink="/tasks" class="title">Task Manager</a>
+<nav class="navbar bg-white shadow px-6 py-4 flex justify-between items-center">
+  <!-- Botón hamburguesa visible solo en móviles -->
+  <button (click)="toggleSidebar.emit()" class="md:hidden text-gray-700 mr-4 focus:outline-none">
+    <!-- Icono hamburguesa SVG -->
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <div class="navbar-brand flex items-center flex-grow">
+    <a routerLink="/tasks" class="text-xl font-semibold text-gray-800">Task Manager</a>
   </div>
-  <ul class="navbar-links">
-    <li><a routerLink="/tasks" routerLinkActive="active">Tareas</a></li>
-    <li><a routerLink="/create" routerLinkActive="active">Crear</a></li>
-  </ul>
-</nav> 
+
+  <div class="flex items-center gap-4">
+    <!-- Botón del perfil -->
+    <button class="flex items-center space-x-2 focus:outline-none group">
+      <div class="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold uppercase">
+        JD
+      </div>
+      <span class="text-gray-800 hidden md:inline">Juan Doe</span>
+    </button>
+
+    <span class="text-gray-300 hidden md:inline">|</span>
+
+    <button (click)="logout()" class="flex items-center space-x-2 hover:text-red-500 cursor-pointer text-gray-800">
+      Cerrar sesión
+    </button>
+  </div>
+</nav>

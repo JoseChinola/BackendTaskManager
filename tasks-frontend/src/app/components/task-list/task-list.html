@@ -1,9 +1,18 @@
 <section
-  class="bg-gradient-to-br from-indigo-500 to-purple-600 p-4 md:p-8 rounded-xl max-w-[1200px] mx-auto mt-8 shadow-xl text-white">
-  <h2 class="text-center text-4xl font-extrabold mb-6 tracking-wider drop-shadow-lg">Lista de Tareas</h2>
+  class="bg-gradient-to-br from-indigo-500 to-purple-600 p-4 md:p-8 rounded-xl max-w-[1200px] mx-auto shadow-xl text-white">
+  <h2 class="text-center text-4xl font-medium mb-6 tracking-wider drop-shadow-lg">Lista de Tareas</h2>
 
-  <input type="number" placeholder="Buscar tarea por ID" [(ngModel)]="searchId" (input)="filterTasks()"
-    class="w-full max-w-[300px] mb-4 px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-base focus:outline-none focus:border-blue-500 focus:shadow-md box-border text-black" />
+  <div class="flex justify-between items-center bg-white px-4 gap-6 py-2 rounded-md">
+    <div class="flex items-center bg-yellow-400 justify-center rounded-md">
+      <input type="number" placeholder="Buscar tarea por ID" [(ngModel)]="searchId" (input)="filterTasks()"
+        class="w-full max-w-[300px] px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-base focus:outline-none focus:border-blue-500 focus:shadow-md box-border text-black" />
+    </div>
+
+    <a routerLink="/create"
+      class="py-3 px-6 text-center w-44 rounded-md bg-green-600 text-white hover:bg-gray-700 transition">
+      Crear tarea
+    </a>
+  </div>
 
   <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 list-none p-0 m-0">
     <li *ngFor="let task of filteredTasks"
