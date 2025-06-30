@@ -1,5 +1,4 @@
-﻿
-public class Task
+﻿public class TaskItem
 {
     public int Id { get; set; }
     public string Titulo { get; set; }
@@ -9,6 +8,4 @@ public class Task
     public int Priority { get; set; } // 1: Low, 2: Medium, 3: High
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-
 }
-

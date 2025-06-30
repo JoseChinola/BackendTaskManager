@@ -1,7 +1,5 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,14 +14,14 @@ public class TasksController : ControllerBase
 
     // get all tasks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Task>>> GetTasks()
+    public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks()
     {
         return await _context.Tasks.ToListAsync();
     }
 
     // get task by id
     [HttpGet("{id}")]
-    public async Task<ActionResult<Task>> GetTask(int id)
+    public async Task<ActionResult<TaskItem>> GetTask(int id)
     {
         var task = await _context.Tasks.FindAsync(id);
         if (task == null)
@@ -35,7 +33,7 @@ public class TasksController : ControllerBase
 
     // create a new task
     [HttpPost]
-    public async Task<ActionResult<Task>> CreateTask(Task task)
+    public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
     {
         task.CreatedAt = DateTime.UtcNow;
         task.UpdatedAt = DateTime.UtcNow;
@@ -48,9 +46,8 @@ public class TasksController : ControllerBase
 
     // update an existing task
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutTask(int id, Task task)
+    public async Task<IActionResult> PutTask(int id, TaskItem task)
     {
-
         if (id != task.Id)
         {
             return BadRequest();
@@ -62,12 +59,8 @@ public class TasksController : ControllerBase
             return NotFound();
         }
 
-
-
         try
         {
-
-
             // Actualizamos los campos necesarios
             existingTask.Titulo = task.Titulo;
             existingTask.Description = task.Description;
@@ -79,7 +72,6 @@ public class TasksController : ControllerBase
             _context.Entry(existingTask).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return Ok(existingTask);
-
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -110,10 +102,8 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
-
     private bool TaskExists(int id)
     {
         return _context.Tasks.Any(e => e.Id == id);
     }
 }
-

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Task, TaskService } from '../../services/task';
+import { Task, TaskService } from '../../shared/services/task';
 
 @Component({
   selector: 'app-task-edit',

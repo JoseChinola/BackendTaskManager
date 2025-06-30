@@ -6,15 +6,16 @@
   padding: 1rem 2rem;
   color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.navbar-brand h1 {
+.navbar-brand .title {
   margin: 0;
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 1.2px;
   user-select: none;
 }
@@ -34,7 +35,7 @@
 .navbar-links a {
   color: #ccc;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
   padding-bottom: 3px;
   border-bottom: 3px solid transparent;

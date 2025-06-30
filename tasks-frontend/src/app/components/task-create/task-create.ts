@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Task, TaskService } from '../../services/task';
+import { Task, TaskService } from '../../shared/services/task';
 import { Router } from '@angular/router';
 
 
