@@ -14,10 +14,10 @@
   <div class="flex items-center gap-4">
     <!-- Botón del perfil -->
     <button class="flex items-center space-x-2 focus:outline-none group">
-      <div class="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold uppercase">
-        JD
+      <div class="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center font-medium uppercase">
+        {{ initials }}
       </div>
-      <span class="text-gray-800 hidden md:inline">Juan Doe</span>
+      <span class="text-gray-800 hidden md:inline">{{ fullName }}</span>
     </button>
 
     <span class="text-gray-300 hidden md:inline">|</span>

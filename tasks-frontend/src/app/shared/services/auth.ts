@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface User {
   email: string,
@@ -18,8 +19,23 @@ export class Auth {
   register(user: User) {
     return this.http.post(`${this.apiUrl}/register`, user)
   }
-  
+
   login(user: User) {
-    return this.http.post(`${this.apiUrl}/login`, user)
+    return this.http.post(`${this.apiUrl}/login`, user, {
+      withCredentials: true
+    });
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/logout`, {}, {
+      withCredentials: true
+    });
+  }
+
+
+  getPerfil(): Observable<{ email: string; fullName: string }> {
+    return this.http.get<{ email: string; fullName: string }>(`${this.apiUrl}/perfil`, {
+      withCredentials: true
+    });
   }
 }

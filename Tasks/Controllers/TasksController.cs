@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
@@ -14,15 +15,26 @@ public class TasksController : ControllerBase
 
     // get all tasks
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks()
     {
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return Unauthorized(new { message = "No estás autorizado." });
+        }
+
         return await _context.Tasks.ToListAsync();
     }
 
     // get task by id
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<TaskItem>> GetTask(int id)
     {
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return Unauthorized(new { message = "No estás autorizado." });
+        }
         var task = await _context.Tasks.FindAsync(id);
         if (task == null)
         {
@@ -33,8 +45,14 @@ public class TasksController : ControllerBase
 
     // create a new task
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
     {
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return Unauthorized(new { message = "No estás autorizado." });
+        }
+
         task.CreatedAt = DateTime.UtcNow;
         task.UpdatedAt = DateTime.UtcNow;
         task.IsCompleted = false;
@@ -46,8 +64,14 @@ public class TasksController : ControllerBase
 
     // update an existing task
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> PutTask(int id, TaskItem task)
     {
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return Unauthorized(new { message = "No estás autorizado." });
+        }
+
         if (id != task.Id)
         {
             return BadRequest();
@@ -90,8 +114,14 @@ public class TasksController : ControllerBase
 
     // delete a task
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteTask(int id)
     {
+        if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            return Unauthorized(new { message = "No estás autorizado." });
+        }
+
         var task = await _context.Tasks.FindAsync(id);
         if (task == null)
         {
