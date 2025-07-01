@@ -34,11 +34,17 @@ export class Login {
     this.auth.login(this.form.value).subscribe({
       next: (res: any) => {
         this.successMessage = res.message;
-        this.router.navigate(['/']);
+        setTimeout(() => {
+          this.successMessage = '';
+          this.router.navigate(['/']);
+        }, 2000);
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Error al iniciar sesión.';
-        console.error(err.error);
+        console.error(err.error?.message);
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
       }
     })
   }

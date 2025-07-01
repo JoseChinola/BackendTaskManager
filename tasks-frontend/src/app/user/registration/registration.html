@@ -4,6 +4,17 @@
         <p class="text-sm text-gray-500">Rellena el siguiente formulario para registrarte</p>
     </div>
 
+    <div class="mt-2 w-[100%] flex justify-center items-center">
+        <!-- Mensajes -->
+        <div *ngIf="successMessage" class="mb-2 p-3 text-green-800 bg-green-200 rounded-md text-center">
+            {{ successMessage }}
+        </div>
+
+        <div *ngIf="errorMessage" class="mb-2 p-3 text-red-800 bg-red-200 rounded-md text-center">
+            {{ errorMessage }}
+        </div>
+    </div>
+
     <form [formGroup]="form" class="flex flex-col items-center px-4 w-full" (ngSubmit)="onSubmit()">
         <div class="flex gap-4 justify-center w-full">
             <!-- Nombre -->
@@ -51,16 +62,7 @@
         </button>
     </form>
 
-    <div class="mt-2">
-        <!-- Mensajes -->
-        <div *ngIf="successMessage" class="mb-2 p-3 text-green-800 bg-green-200 rounded-md text-center">
-            {{ successMessage }}
-        </div>
 
-        <div *ngIf="errorMessage" class="mb-2 p-3 text-red-800 bg-red-200 rounded-md text-center">
-            {{ errorMessage }}
-        </div>
-    </div>
 
     <p class="text-center text-sm text-gray-500 mt-2">
         ¿Ya tienes una cuenta?

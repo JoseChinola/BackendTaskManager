@@ -46,6 +46,7 @@ export class Registration implements OnInit {
 
     if (this.form.invalid) {
       this.errorMessage = 'Por favor corrige los errores del formulario.';
+      setTimeout(() => this.errorMessage = '', 3000);
       return;
     }
 
@@ -53,16 +54,17 @@ export class Registration implements OnInit {
     this.auth.register(userData).subscribe({
       next: (res: any): void => {
         this.successMessage = res.message;
+        setTimeout(() => this.successMessage = '', 3000);  // CORRECCIÓN AQUÍ
         this.errorMessage = '';
         this.form.reset();
         this.submitted = false;
         this.switchForm.emit('login');
-
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Error al registrar el usuario.';
         this.successMessage = '';
         console.error(err);
+        setTimeout(() => this.errorMessage = '', 3000);
       }
     });
   }
