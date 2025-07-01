@@ -1,7 +1,29 @@
 <div class="p-4 bg-blue-50 min-h-screen flex justify-center items-center">
-    <div class="bg-white rounded-lg p-4 shadow-lg min-h-[450px] w-[500px]">
-        <div class="">
-            <app-registration></app-registration>
+    <div class="bg-white rounded-xl p-6 shadow-2xl min-h-[500px] w-full max-w-[550px]">
+
+        <!-- Tabs con separación -->
+        <div class="flex mb-6 w-full max-w-[500px] h-12 rounded-md overflow-hidden border border-gray-50">
+            <!-- Registro -->
+            <button (click)="activeForm = 'login'" [ngClass]="{
+            'bg-blue-700 text-white rounded-br-[50px]': activeForm === 'login',
+            'bg-gray-100 text-neutral-400 rounded-tr-[50px]': activeForm !== 'login'
+          }" class="w-1/2 font-medium transition-colors duration-300 ease-in-out">
+                login
+            </button>
+
+            <!-- Login -->
+            <button (click)="activeForm = 'register'" [ngClass]="{
+            'bg-blue-700 text-white rounded-bl-[50px]': activeForm === 'register',
+            'bg-gray-100 text-neutral-400 rounded-tl-[50px]': activeForm !== 'register'
+          }" class="w-1/2 font-medium transition-colors duration-300 ease-in-out">
+                Registro 
+            </button>
+        </div>
+
+        <!-- Formulario activo -->
+        <div class="transition-all duration-300 ease-in-out">
+            <app-login *ngIf="activeForm === 'login'" (switchForm)="activeForm = $event"></app-login>
+            <app-registration *ngIf="activeForm === 'register'" (switchForm)="activeForm = $event"></app-registration>
         </div>
     </div>
 </div>

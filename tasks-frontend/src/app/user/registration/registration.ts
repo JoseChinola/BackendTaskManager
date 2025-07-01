@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../shared/services/auth';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-registration',
@@ -10,15 +13,16 @@ import { Auth } from '../../shared/services/auth';
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
+
 export class Registration implements OnInit {
+  @Output() switchForm = new EventEmitter<'login' | 'register'>();
   form!: FormGroup;
   submitted = false;
 
-  // 🔧 Añade estas dos propiedades
   errorMessage = '';
   successMessage = '';
 
-  constructor(private formBuilder: FormBuilder, private auth: Auth) { }
+  constructor(private formBuilder: FormBuilder, private auth: Auth, private router: Router) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -45,20 +49,25 @@ export class Registration implements OnInit {
       return;
     }
 
-    const { confirmPassword, ...userData } = this.form.value; // omitimos confirmPassword
-
+    const { confirmPassword, ...userData } = this.form.value;
     this.auth.register(userData).subscribe({
-      next: (res) => {
-        this.successMessage = 'Usuario registrado correctamente.';
+      next: (res: any): void => {
+        this.successMessage = res.message;
         this.errorMessage = '';
         this.form.reset();
         this.submitted = false;
+        this.switchForm.emit('login');
+
       },
       error: (err) => {
-        this.errorMessage = 'Hubo un error al registrar el usuario.';
+        this.errorMessage = err.error?.message || 'Error al registrar el usuario.';
         this.successMessage = '';
         console.error(err);
       }
     });
+  }
+
+  switchToLogin() {
+    this.switchForm.emit('login');
   }
 }

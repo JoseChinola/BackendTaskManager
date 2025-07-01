@@ -21,6 +21,9 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var user = new ApplicationUser
         {
             UserName = model.Email,
@@ -32,10 +35,12 @@ public class AuthController : ControllerBase
 
         if (result.Succeeded)
         {
-            return Ok("Usuario registrado con exito");
+            return Ok(new { message = "Usuario registrado con exito" });
         }
 
-        return BadRequest("Error al registrar el usuario");
+        var errores = result.Errors.Select(e => e.Description).ToList();
+
+        return BadRequest(new { message = "No se pudo registrar el usuario", errors = errores });
     }
 
     [HttpPost("login")]
@@ -49,8 +54,8 @@ public class AuthController : ControllerBase
         );
         if (result.Succeeded)
         {
-            return Ok("Login exitoso");
+            return Ok(new { message = "Login exitoso" });
         }
-        return Unauthorized("Correo o contraseña incorrectos");
+        return Unauthorized(new { message = "Correo o contraseña incorrectos" });
     }
 }

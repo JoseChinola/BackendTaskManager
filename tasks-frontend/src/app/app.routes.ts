@@ -26,8 +26,18 @@ export const routes: Routes = [
         ]
     },
     {
-        path: 'login',
-        loadComponent: () => import('./user/user').then(m => m.User)
+        path: 'auth',
+        loadComponent: () => import('./user/user').then(m => m.User),
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./user/login/login').then(m => m.Login)
+            },
+            {
+                path: '',
+                loadComponent: () => import('./user/registration/registration').then(m => m.Registration)
+            }
+        ]
 
     }
 ];
